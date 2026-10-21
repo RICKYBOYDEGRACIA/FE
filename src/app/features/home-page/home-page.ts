@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../../../services/user.service';
 import { CommonModule } from '@angular/common';
@@ -6,7 +6,8 @@ import { FormControl, FormGroup } from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatButtonModule} from '@angular/material/button';
-import { finalize, min } from 'rxjs';
+import { finalize } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   imports: [
@@ -24,6 +25,8 @@ export class HomePage implements OnInit{
   isLoading: boolean = false;
   isEditing: boolean = false;
   userId : string = '';
+
+  toastr = inject(ToastrService);
 
   constructor(
     private userService: UserService,
@@ -62,20 +65,24 @@ export class HomePage implements OnInit{
     this.isLoading = true;
     if(this.isEditing && this.userId){
     const id = this.userId;
-    const form = this.userForm.value;
-    this.userService.updateUser(id, form).pipe(
+    const formVal = this.userForm.value;
+    this.userService.updateUser(id, formVal).pipe(
       finalize (() =>{
-        this.isEditing = false;
-        this.getUsers();
+        this.isLoading = false;
         this.cdr.detectChanges();
       })
     ).subscribe({
       next: (res) => {;
-        this.userForm.reset();
-        alert(res?.message);
+        this.toastr.success(res?.message, 'Success!');
+          this.userForm.reset();
+          this.isEditing = false;          
+          this.userId = '';
+          this.getUsers();
       },
       error: (err) => {
-        alert("Error occured")
+        this.isEditing = true;
+        const errorMessage = err.error?.message || 'An error occured'
+        this.toastr.error(errorMessage, 'Error!');
         console.error(err)
       }
     })
