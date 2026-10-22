@@ -1,0 +1,42 @@
+<div class="min-h-screen flex flex-col items-center justify-center p-6">
+  <div class="border rounded-xl xl:w-xl md: w-md w-sm p-5">
+    <div class="py-10 flex"> 
+        <h1 class="text-xl">Login Page</h1>
+    </div>
+    <form [formGroup]="loginForm" (ngSubmit)="handleLogin()">
+        <div class="">
+            <mat-form-field class="w-full">
+                <mat-label>Username</mat-label>
+                <input
+                formControlName="email"
+                matInput
+                #username
+                placeholder="Enter your username"
+                />
+            </mat-form-field>
+        </div>
+        <div class="">
+            <mat-form-field class="w-full">
+                <mat-label>Password</mat-label>
+                <input
+                type="password"
+                formControlName="password"
+                matInput
+                #password
+                placeholder="Enter your password"
+                />
+            </mat-form-field>
+        </div>
+        <div class="w-full">
+            <button matButton="tonal" type="submit" class="w-full">
+                Login
+            </button>
+        </div>
+    </form>
+    <div class="w-full mt-10">
+        <button matButton type="submit" class="w-full" (click)="goRegister()">
+            Register
+        </button>
+    </div>
+  </div>
+</div>
