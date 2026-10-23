@@ -1,1 +1,14 @@
-<router-outlet></router-outlet>
+@if(authService.isAuthenticated()){
+  <app-sidebar></app-sidebar>
+}
+<main 
+  class="min-h-screen bg-gray-50 transition-all duration-300 pt-16 lg:pt-0"
+  [ngClass]="{
+    'lg:ml-[260px]': !sidebarService.isCollapsed() && authService.isAuthenticated(),
+    'lg:ml-[50px]': sidebarService.isCollapsed()
+  }"
+>
+  <div class="p-6">
+    <router-outlet></router-outlet>
+  </div>
+</main>
