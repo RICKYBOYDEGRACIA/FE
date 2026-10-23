@@ -22,7 +22,6 @@ export class AuthService {
     };
 
     private platformId = inject(PLATFORM_ID);
-    currentUser = signal<User | null>(this.getUserFromToken());
 
 
     constructor(
@@ -35,32 +34,18 @@ export class AuthService {
     }
 
     login(credentials: any){
-        return this.http.post<any>(`${this.apiUrl}/login`, credentials, this.httpOptions).pipe(
-            tap(res => {
-                if (isPlatformBrowser(this.platformId)) {
-                    localStorage.setItem('token', res.token);
-                }
-                const decodedUser = this.decodeToken(res.token);
-                this.currentUser.set(decodedUser);
-            })
-        )
+        return this.http.post<any>(`${this.apiUrl}/login`, credentials, this.httpOptions)
     }
 
-    private decodeToken(token: string): User | null {
-        try {
-        const payload = JSON.parse(atob(token.split('.')[1]));
-        return { id: payload.id, email: payload.email };
-        } catch (e) {
-        return null;
-        }
-    }
-
-    private getUserFromToken(): User | null {
-        if (!isPlatformBrowser(this.platformId)) {
-            return null;
-        }
+    isAuthenticated(): boolean {
         const token = localStorage.getItem('token');
-        if (!token) return null;
-        return this.decodeToken(token);
+        return !!token && !this.isTokenExpired(token);
     }
+
+    private isTokenExpired(token: string): boolean {
+        // Logic to decode and check expiration
+        return false; 
+    }
+
+    
 }
