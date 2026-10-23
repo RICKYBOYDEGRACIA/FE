@@ -21,8 +21,7 @@ export class AuthService {
         headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
 
-    private platformId = inject(PLATFORM_ID);
-
+    private readonly TOKEN_KEY = 'token';
 
     constructor(
         private http: HttpClient,
@@ -33,19 +32,33 @@ export class AuthService {
         return this.http.post<AuthResponse>(`${this.apiUrl}/register`, payload, this.httpOptions);
     }
 
-    login(credentials: any){
-        return this.http.post<any>(`${this.apiUrl}/login`, credentials, this.httpOptions)
+    login(credentials : any){
+        return this.http.post<any>(`${this.apiUrl}/login`, credentials, this.httpOptions).pipe(
+            tap(res => {
+                if(res && res.token){
+                    this.setToken(res.token)
+                }
+            })
+        )
     }
 
+    setToken(token: string){
+        return localStorage.setItem(this.TOKEN_KEY, token)
+    }
+
+    getToken(){
+        return localStorage.getItem(this.TOKEN_KEY)
+    }
+
+
     isAuthenticated(): boolean {
-        const token = localStorage.getItem('token');
-        return !!token && !this.isTokenExpired(token);
+        const token = this.getToken();
+        return !!token! && !this.isTokenExpired(token);
     }
 
     private isTokenExpired(token: string): boolean {
         // Logic to decode and check expiration
         return false; 
     }
-
     
 }
