@@ -5,11 +5,13 @@ import { CreateUserPage } from './features/user-page/create-user-page/create-use
 import { UpdateUserPage } from './features/user-page/update-user-page/update-user-page';
 import { authGuard } from './core/guards/auth.guard';
 import { UserPage } from './features/user-page/user-page';
+import { guestGuard } from './core/guards/guest.guard';
 
 export const routes: Routes = [
     {
         path: '',
         component: LoginPage,
+        canActivate: [guestGuard]
     },
     {
         path: 'home',
