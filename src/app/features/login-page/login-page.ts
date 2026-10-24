@@ -39,6 +39,7 @@ export class LoginPage {
   handleLogin(){
     if(this.loginForm.invalid){
       this.toastr.error("Fill the fields", "Error")
+      return
     }
     const credentials = this.loginForm.value;
     this.authService.login(credentials).subscribe({
@@ -53,7 +54,7 @@ export class LoginPage {
   }
 
   goRegister(){
-    this.router.navigate(['/create'])
+    this.router.navigate(['/register'])
   }
 
 }

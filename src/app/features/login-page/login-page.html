@@ -4,8 +4,8 @@
         <h1 class="text-xl">Login Page</h1>
     </div>
     <form [formGroup]="loginForm" (ngSubmit)="handleLogin()">
-        <div class="">
-            <mat-form-field class="w-full">
+        <div class="flex flex-col gap-5">
+            <mat-form-field appearance="outline">
                 <mat-label>Username</mat-label>
                 <input
                 formControlName="email"
@@ -14,9 +14,7 @@
                 placeholder="Enter your username"
                 />
             </mat-form-field>
-        </div>
-        <div class="">
-            <mat-form-field class="w-full">
+            <mat-form-field appearance="outline">
                 <mat-label>Password</mat-label>
                 <input
                 type="password"
@@ -27,13 +25,13 @@
                 />
             </mat-form-field>
         </div>
-        <div class="w-full">
+        <div class="mt-5">
             <button matButton="tonal" type="submit" class="w-full">
                 Login
             </button>
         </div>
     </form>
-    <div class="w-full mt-10">
+    <div class="w-full mt-5">
         <button matButton type="submit" class="w-full" (click)="goRegister()">
             Register
         </button>

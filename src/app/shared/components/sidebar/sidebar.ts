@@ -23,7 +23,7 @@ export class Sidebar {
   // TypeScript navigation array
   navItems: NavItem[] = [
     { label: 'Home', routePath: '/home', icon: 'dashboard' },
-    { label: 'User', routePath: '/user-page', icon: 'people' },
+    { label: 'Users', routePath: '/user-page', icon: 'people' },
   ];
 
   toggleSidebar() {
