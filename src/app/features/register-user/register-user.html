@@ -1,0 +1,130 @@
+<div class="min-h-screen flex flex-col items-center justify-center p-6">
+  <div class="p-10 flex"> 
+    <h1 class="text-xl">Register User</h1>
+  </div>
+  <form
+    [formGroup]="userForm"
+    (ngSubmit)="handleSubmit()"
+    class="w-full max-w-2xl space-y-6"
+  >
+    <!-- Input Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+      <!-- First Name -->
+      <div>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>First Name</mat-label>
+          <input
+            formControlName="firstName"
+            matInput
+            #firstName
+            placeholder="Enter your firstname"
+          />
+        </mat-form-field>
+        @if(userForm.get('firstName')?.hasError('required') && (userForm.get('firstName')?.touched || userForm.get('firstName')?.dirty)){
+          <mat-error>This is required</mat-error>
+        }
+      </div>
+
+      <!-- Middle Name -->
+      <div>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Middle Name</mat-label>
+          <input
+            formControlName="middleName"
+            matInput
+            #middleName
+            placeholder="Enter your middlename"
+          />
+        </mat-form-field>
+        @if(userForm.get('middleName')?.hasError('required') && (userForm.get('middleName')?.touched || userForm.get('middleName')?.dirty)){
+          <mat-error>This is required</mat-error>
+        }
+      </div>
+
+      <!-- Last Name -->
+      <div>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Last Name</mat-label>
+          <input formControlName="lastName" matInput #lastName placeholder="Enter your lastname" />
+        </mat-form-field>
+        @if(userForm.get('lastName')?.hasError('required') && (userForm.get('lastName')?.touched || userForm.get('lastName')?.dirty)){
+          <mat-error>This is required</mat-error>
+        }
+      </div>
+
+      <!-- Email -->
+      <div>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Email</mat-label>
+          <input type="email" formControlName="email" matInput #email placeholder="Enter your email" />
+        </mat-form-field>
+        @if(userForm.get('email')?.hasError('required') && (userForm.get('email')?.touched || userForm.get('email')?.dirty)){
+          <mat-error>This is required</mat-error>
+        }
+      </div>
+
+      <!-- Password -->
+      <div>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Password</mat-label>
+          <input type="password" formControlName="password" matInput #password placeholder="Enter your password" />
+        </mat-form-field>
+        @if(userForm.get('password')?.hasError('required') && (userForm.get('password')?.touched || userForm.get('password')?.dirty)){
+          <mat-error>This is required</mat-error>
+        }
+      </div>
+
+      <!-- Age -->
+      <div>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Age</mat-label>
+          <input type="number" formControlName="age" matInput #age placeholder="Enter your age" />
+        </mat-form-field>
+        @if(userForm.get('age')?.hasError('required') && (userForm.get('age')?.touched || userForm.get('age')?.dirty)){
+          <mat-error>This is required</mat-error>
+        }
+      </div>
+
+      <!-- Location Section (Spans 2 columns on larger screens) -->
+      <div
+        formGroupName="location"
+        class="sm:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4"
+      >
+        <div>
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>City</mat-label>
+            <input formControlName="city" matInput #city placeholder="Enter your city" />
+          </mat-form-field>
+          @if(userForm.get('location.city')?.hasError('required') && (userForm.get('location.city')?.touched || userForm.get('location.city')?.dirty)){
+            <mat-error>This is required</mat-error>
+          }
+        </div>
+        <div>
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Barangay</mat-label>
+            <input
+              formControlName="barangay"
+              matInput
+              #barangay
+              placeholder="Enter your barangay"
+            />
+          </mat-form-field>
+          @if(userForm.get('location.barangay')?.hasError('required') && (userForm.get('location.barangay')?.touched || userForm.get('location.barangay')?.dirty)){
+            <mat-error>This is required</mat-error>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit Button (Inside the form) -->
+    <div class="flex flex-col gap-5 justify-center pt-2">
+      <button class="rounded-sm" matButton="filled" color="primary" type="submit" [disabled]="isLoading">
+        {{isLoading ? 'Submitting...' : 'Submit'}}
+      </button>
+      <button class="rounded-sm" matButton="filled" (click)="goBack()">
+        Go Back
+      </button>
+    </div>        
+  </form>
+</div>
+  

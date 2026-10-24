@@ -6,12 +6,17 @@ import { UpdateUserPage } from './features/user-page/update-user-page/update-use
 import { authGuard } from './core/guards/auth.guard';
 import { UserPage } from './features/user-page/user-page';
 import { guestGuard } from './core/guards/guest.guard';
+import { RegisterUser } from './features/register-user/register-user';
 
 export const routes: Routes = [
     {
         path: '',
         component: LoginPage,
         canActivate: [guestGuard]
+    },
+    {
+        path: 'register',
+        component: RegisterUser,
     },
     {
         path: 'home',
