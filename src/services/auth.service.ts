@@ -42,6 +42,10 @@ export class AuthService {
         )
     }
 
+    logout(){
+        localStorage.removeItem('token');
+    }
+
     setToken(token: string){
         return localStorage.setItem(this.TOKEN_KEY, token)
     }
@@ -53,7 +57,7 @@ export class AuthService {
 
     isAuthenticated(): boolean {
         const token = this.getToken();
-        return !!token! && !this.isTokenExpired(token);
+        return !!token && !this.isTokenExpired(token);
     }
 
     private isTokenExpired(token: string): boolean {

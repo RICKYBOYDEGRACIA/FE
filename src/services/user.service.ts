@@ -17,7 +17,7 @@ export class UserService {
   };
 
   getUsers() {
-    return this.http.get(this.apiUrl);
+    return this.http.get<any>(this.apiUrl);
   }
 
   createUser(payload: any): Observable<any> {
