@@ -6,13 +6,14 @@ import { provideToastr } from 'ngx-toastr';
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { authInterceptor } from './core/interceptors/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideRouter(routes), provideClientHydration(),
-    provideAnimationsAsync(),
+    provideRouter(routes),
+    provideHttpClient(withInterceptors([authInterceptor])),
     provideToastr({
       timeOut: 3000,
       positionClass: 'toast-top-right',
